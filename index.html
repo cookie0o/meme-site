@@ -82,34 +82,57 @@
       <button id="accept-cookies">Accept</button>
     </div>
     <div id="video-container">
-      <video id="my-video" src="./rick.mp4" controls></video>
-      <div id="video-credit">by: Rapid Liquid</div>
+      <video id="my-video" controls></video>
+      <source src="" type="video/mp4">
+      <source src="" type="video/mov">
     </div>
-    <script>
+<script>
+      // file:///C:/Users/juerg/Desktop/Cat-Role-site-main/index.html?v=1
       const cookieConsent = document.getElementById('cookie-consent');
       const acceptCookiesBtn = document.getElementById('accept-cookies');
       const videoContainer = document.getElementById('video-container');
       const myVideo = document.getElementById('my-video');
+      const urlParams = new URLSearchParams(window.location.search);
+      const videoId = urlParams.get('v');
+
+      // Define videos
+      const videos = {
+        '1': {
+          src: './videos/rick.mp4',
+          src: './videos/rick.mov',
+          credit: 'by: Rapid Liquid'
+        },
+        '2': {
+          src: './videos/jeff.mp4',
+          src: './videos/jeff.mov',
+          credit: 'by: unknown'
+        },
+        '3': {
+          src: './videos/wap.mp4',
+          src: './videos/wap.mov',
+          credit: 'by: bibi'
+        }
+      }
+
+      // Show cookie consent on page load
+      cookieConsent.classList.add('show');
 
       acceptCookiesBtn.addEventListener('click', () => {
         cookieConsent.classList.remove('show');
         videoContainer.classList.add('show');
+        myVideo.src = videos[videoId].src
         myVideo.play();
         myVideo.requestFullscreen();
-      });
+        
+        //cookieConsent.classList.remove('show');
+        //videoContainer.classList.add('show');
+        //myVideo.src = videos[videoId].src
+        //myVideo.play();
+        //myVideo.requestFullscreen();
 
-      // Show cookie consent on page load
-      cookieConsent.classList.add('show');
-    </script>
-  </body>
-
-  <!-- Link preview -->
-  <head>
-    <meta property="og:image" content="https://avatars.githubusercontent.com/u/81589649?v=4?w=200" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://cookie0o.ml" />
-    <meta property="og:title" content="cookie0_o`s Personal page!" />
-    <meta property="og:description" content="click this link and read/see more about me here." />
-  </head>
-
-</html>
+    const videoCredit = document.createElement('p');
+    videoCredit.id = 'video-credit';
+    videoCredit.textContent = videos[videoId].credit;
+    videoContainer.appendChild(videoCredit);
+  });
+</script>
